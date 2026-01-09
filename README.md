@@ -49,9 +49,9 @@ El módulo aplica de forma práctica conceptos clave de **desarrollo empresarial
 ## 📂 Estructura del proyecto
 
 /
-├── alquileres_vehiculos/       Módulo principal de gestión de alquileres
-├── alquileres_facturacion/     Módulo de enlace para facturación
-└── README.md                   Documentación del proyecto                                          
+├── alquileres_vehiculos/      
+├── alquileres_facturacion/    
+└── README.md                                                                       
 ---
 
 ## 🚀 Estado del proyecto

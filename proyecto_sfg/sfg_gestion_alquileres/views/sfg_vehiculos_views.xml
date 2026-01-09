@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="sfg_vehiculos_action" model="ir.actions.act_window">
+        <field name="name">Vehículos</field>
+        <field name="res_model">vehiculos</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+    <record id="sfg_vehiculos_tree" model="ir.ui.view">
+        <field name="name">vehiculos.tree</field>
+        <field name="model">vehiculos</field>
+        <field name="arch" type="xml">
+            <tree string="Listado de Vehículos"
+              decoration-success="state in ('disponible', 'alquilado')"
+              decoration-bf="state == 'alquilado'"
+              decoration-danger="state == 'reparacion'"
+              decoration-it="state == 'reparacion'">
+                <header>
+                    <!-- Botón recorset para ejecutar la acción -->
+                    <button name="action_ver_modificar_recordset" type="object" string="Ver y modificar Recordset"
+                            class="oe_highlight"/>
+                </header>
+                <field name="name"/>
+                <field name="codigo"/>
+                <field name="matricula"/>
+                <field name="num_plazas" optional="show"/>
+                <field name="neumatico" optional="show"/>
+                <field name="fecha_fabricacion" optional="hide"/>
+                <field name="fecha_itv" optional="hide"/>
+                <field name="combustible"/>
+                <field name="precio_diario"/>
+                <field name="precio_semanal"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    <record id="sfg_vehiculos_form_view" model="ir.ui.view">
+    <field name="name">Vehículos Formulario</field>
+    <field name="model">vehiculos</field>
+    <field name="arch" type="xml">
+        <form string="Vehículos">
+            <header>
+                <button name="action_comenzar_reparacion" type="object" string="Comenzar reparación" class="oe_highlight"
+                        attrs="{'invisible': [('state', '!=', 'disponible')]}"/>
+                <button name="action_terminar_reparacion" type="object" string="Terminar reparación" class="oe_highlight"
+                        attrs="{'invisible': [('state', '!=', 'reparacion')]}"/>
+                <field name="state" widget="statusbar" statusbar_visible="disponible,alquilado,reparacion"/>
+            </header>
+            <sheet>
+                <h1>
+                    <field name="name" class="oe_inline"/>
+                    <field name="codigo" class="oe_inline"/>
+                </h1>
+                <div>
+                    <field name="caracteristicas_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                </div>
+                <group>
+                    <group>
+                        <field name="matricula"/>
+                        <button name="%(sfg_action_generar_matricula)d" type="action"
+                                string="Generar Matrícula" class="oe_highlight"/>
+                        <field name="tipo_vehiculo_id"/>
+                        <field name="numero_alquileres" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="fecha_fabricacion"/>
+                        <field name="fecha_itv"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page string="Características">
+                        <group>
+                            <field name="potencia"/>
+                            <field name="num_plazas"/>
+                            <field name="combustible"/>
+                            <field name="neumatico"/>
+                            <field name="maletero" widget="boolean_toggle"/>
+                            <field name="capacidad_maletero" attrs="{'required': [('maletero', '=', True)]}"/>
+                        </group>
+                    </page>
+                    <page string="Precios">
+                        <group>
+                            <field name="precio_diario"/>
+                            <field name="precio_semanal" readonly="1"/>
+                        </group>
+                    </page>
+                    <page string="Alquileres">
+                        <field name="alquiler_ids">
+                            <tree editable="false">
+                                <field name="cliente_id"/>
+                                <field name="fecha_inicio"/>
+                                <field name="fecha_fin"/>
+                                <field name="duracion"/>
+                                <field name="precio_final"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+    <record id="sfg_vehiculos_search_view" model="ir.ui.view">
+        <field name="name">Vehículos Búsqueda</field>
+        <field name="model">vehiculos</field>
+        <field name="arch" type="xml">
+            <search string="Buscar vehículos">
+                <!-- Búsqueda por nombre, código, matrícula, fecha de fabricación y combustible -->
+                <field name="name"/>
+                <field name="codigo"/>
+                <field name="matricula"/>
+                <field name="fecha_fabricacion"/>
+                <field name="combustible"/>
+
+                <!-- Filtro predeterminado para mostrar sólo vehículos de tipo 'Berlina' -->
+                <filter name="tipo_vehiculo_berlina" string="Berlinas" domain="[('tipo_vehiculo_id.name', '=', 'Berlina')]" />
+
+                <!-- Agrupación predeterminada por número de plazas -->
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_by_num_plazas" string="Número de Plazas" context="{'group_by': 'num_plazas'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="sfg_vehiculos_kanban" model="ir.ui.view">
+        <field name="name">vehiculos.kanban</field>
+        <field name="model">vehiculos</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="tipo_vehiculo_id" records_draggable="false">
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <p><b><field name="name"/></b></p>
+                            <p>Matrícula: <field name="matricula"/></p>
+
+                            <!-- Precio diario si el estado es "alquilado" -->
+                            <t t-if="record.state.raw_value == 'alquilado'">
+                                <p>Precio Diario: <field name="precio_diario"/></p>
+                            </t>
+
+                            <!-- Estado si está en "reparación" -->
+                            <t t-if="record.state.raw_value == 'reparacion'">
+                                <p>Estado: Reparación</p>
+                            </t>
+                            <p>
+                                <field name="caracteristicas_ids"/>
+                            </p>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>

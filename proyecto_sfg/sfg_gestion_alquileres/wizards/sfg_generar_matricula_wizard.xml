@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Vista del asistente -->
+    <record id="sfg_view_generar_matricula_wizard" model="ir.ui.view">
+        <field name="name">generar.matricula.wizard.form</field>
+        <field name="model">generar.matricula.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Generar Matrícula">
+                <group>
+                    <field name="numero_matricula"/>
+                    <field name="letras_matricula"/>
+                </group>
+                <footer>
+                    <button name="action_generar_matricula" type="object" string="Aceptar" class="oe_highlight"/>
+                    <button string="Cancelar" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Acción del asistente -->
+    <record id="sfg_action_generar_matricula" model="ir.actions.act_window">
+        <field name="name">Generar Matrícula</field>
+        <field name="res_model">generar.matricula.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{'default_numero_matricula': '', 'default_letras_matricula': ''}</field>
+    </record>
+</odoo>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="sfg_alquiler_vehiculos_action" model="ir.actions.act_window">
+        <field name="name">Alquiler de vehículos</field>
+        <field name="res_model">alquileres.vehiculos</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="sfg_alquileres_vehiculos_tree" model="ir.ui.view">
+    <field name="name">alquileres.vehiculos.tree</field>
+    <field name="model">alquileres.vehiculos</field>
+    <field name="arch" type="xml">
+        <!-- Vista de lista con decoraciones de color y fuente -->
+        <tree string="Listado Alquileres de Vehículos" default_order="state desc"
+              decoration-warning="state == 'previo'"
+              decoration-success="state in ('en_proceso', 'terminado')"
+              decoration-bf="state == 'terminado'"
+              decoration-primary="state == 'facturado'"
+              decoration-it="state == 'facturado'"
+              decoration-danger="state == 'cancelado'">
+
+            <header>
+                <button name="action_comprobar_alquileres" type="object" string="Comprobar alquileres" class="oe_highlight"/>
+            </header>
+
+            <field name="vehiculo_id"/>
+            <field name="state"  options="{'readonly': [('state', 'in', ['facturado', 'cancelado'])]}"/>
+            <field name="cliente_id" options="{'no_create': True, 'no_create_edit': True}"/>
+            <field name="usuario_id"/>
+            <field name="fecha_inicio"/>
+            <field name="fecha_fin"/>
+            <field name="duracion"/>
+            <field name="precio_final"/>
+            <!-- Botón por cada registro -->
+            <button name="action_comprobar_alquiler_individual" type="object" icon="fa-check-square" class="oe_highlight"/>
+        </tree>
+    </field>
+</record>
+    <record id="sfg_alquileres_vehiculos_form" model="ir.ui.view">
+        <field name="name">alquileres.vehiculos.form</field>
+        <field name="model">alquileres.vehiculos</field>
+        <field name="arch" type="xml">
+            <form string="Alquiler de Vehículo">
+                <header>
+                    <!-- El campo estado con el widget statusbar -->
+                    <field name="state" widget="statusbar" statusbar_visible="previo,en_proceso,terminado,facturado,cancelado"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="vehiculo_id" string="Vehículo"/>
+                    </group>
+                    <notebook>
+                        <page string="Operación">
+                            <group>
+                                <field name="cliente_id" string="Cliente" options="{'no_open': True}"/>
+                                <field name="usuario_id" string="Usuario"/>
+                                <field name="precio_final" string="Precio Final" readonly="1"/>
+                            </group>
+                        </page>
+                        <page string="Fechas">
+                            <group>
+                                <field name="fecha_inicio" string="Fecha de Inicio"/>
+                                <field name="fecha_fin" string="Fecha de Fin"/>
+                                <field name="duracion" string="Duración (días)"/>
+                            </group>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button name="action_facturar_alquiler" type="object" string="Facturar alquiler" class="oe_highlight"/>
+                        <button name="action_terminar_alquiler" type="object" string="Terminar alquiler" class="oe_highlight"/>
+                        <button name="action_cancelar_alquiler" type="object" string="Cancelar alquiler" class="oe_highlight"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="sfg_alquileres_vehiculos_search" model="ir.ui.view">
+        <field name="name">alquileres.vehiculos.search</field>
+        <field name="model">alquileres.vehiculos</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Alquileres">
+                <field name="vehiculo_id"/>
+                <field name="state"/>
+                <field name="cliente_id"/>
+                <field name="usuario_id"/>
+                <filter string="Duración >= 7 días" name="duracion_ge_7" domain="[('duracion', '>=', 7)]"/>
+                <filter string="Duración &lt; 7 días" name="duracion_lt_7" domain="[('duracion', '&lt;', 7)]"/>
+            </search>
+        </field>
+    </record>
+</odoo>

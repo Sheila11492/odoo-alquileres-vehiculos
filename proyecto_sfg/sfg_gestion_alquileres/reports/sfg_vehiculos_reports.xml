@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="sfg_formato_papel_vehiculos_alquileres_report" model="report.paperformat">
+        <field name="name">Formato Informe Vehículos</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">240</field>
+        <field name="page_width">180</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">22</field>
+        <field name="margin_bottom">22</field>
+        <field name="margin_left">22</field>
+        <field name="margin_right">22</field>
+        <field name="header_line" eval="True"/>
+        <field name="header_spacing">23</field>
+        <field name="dpi">200</field>
+    </record>
+
+    <record id="sfg_vehiculos_alquileres_report" model="ir.actions.report">
+        <field name="name">Informe de Vehículos y Alquileres</field>
+        <field name="model">vehiculos</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sfg_gestion_alquileres.sfg_template_vehiculos_alquileres</field>
+        <field name="print_report_name">'Informe de Vehículos y Alquileres'</field>
+        <field name="paperformat_id" ref="sfg_formato_papel_vehiculos_alquileres_report"/>
+        <field name="binding_model_id" ref="model_vehiculos"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

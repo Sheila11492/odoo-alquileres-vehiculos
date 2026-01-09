@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Plantilla Principal -->
+    <template id="sfg_template_vehiculos_alquileres">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-set="company" t-value="user.company_id"/>
+                <main>
+                    <t t-foreach="docs" t-as="vehiculo">
+                        <div class="page">
+                            <h1 ><t t-esc="vehiculo.name"/></h1>
+                            <h2>Código: <t t-esc="vehiculo.codigo"/></h2>
+
+                            <p><strong>Matrícula:</strong> <t t-esc="vehiculo.matricula"/></p>
+                            <p><strong>Número de Plazas:</strong> <t t-esc="vehiculo.num_plazas"/></p>
+                            <p><strong>Fecha de Fabricación:</strong> <t t-esc="vehiculo.fecha_fabricacion"/></p>
+                            <p><strong>Precio Diario:</strong> <t t-esc="vehiculo.precio_diario"/></p>
+                            <p><strong>Precio Semanal:</strong> <t t-esc="vehiculo.precio_semanal"/></p>
+
+                            <h3 style="margin-top:20px;">Historial de Alquileres</h3>
+
+                            <!-- Asegura que alquileres se pasa correctamente a la subplantilla -->
+                            <t t-set="alquileres" t-value="vehiculo.alquiler_ids"/>
+                            <t t-call="sfg_gestion_alquileres.sfg_template_alquileres_vehiculo">
+                                <t t-set="alquileres" t-value="vehiculo.alquiler_ids"/>
+                            </t>
+                        </div>
+                    </t>
+                </main>
+            </t>
+        </t>
+    </template>
+
+    <!-- Subplantilla de Alquileres -->
+    <template id="sfg_template_alquileres_vehiculo">
+        <t t-set="alquileres" t-value="alquileres"/>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Vehículo</th>
+                    <th>Estado</th>
+                    <th>Cliente</th>
+                    <th>Usuario</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    <th>Duración (días)</th>
+                    <th>Precio Final</th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-if="alquileres">
+                    <t t-foreach="alquileres" t-as="alquiler">
+                        <tr>
+                            <td><t t-esc="alquiler.vehiculo_id.name"/></td>
+                            <td><t t-esc="alquiler.state"/></td>
+                            <td><t t-esc="alquiler.cliente_id.name"/></td>
+                            <td><t t-esc="alquiler.usuario_id.name"/></td>
+                            <td><t t-esc="alquiler.fecha_inicio"/></td>
+                            <td><t t-esc="alquiler.fecha_fin"/></td>
+                            <td><t t-esc="alquiler.duracion"/></td>
+                            <td><t t-esc="alquiler.precio_final"/></td>
+                        </tr>
+                    </t>
+                </t>
+                <t t-else="">
+                    <tr>
+                        <td style="text-align:center;">No hay alquileres registrados.</td>
+                    </tr>
+                </t>
+            </tbody>
+        </table>
+    </template>
+</odoo>

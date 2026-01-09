@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="sfg_tipos_vehiculos_action" model="ir.actions.act_window">
+        <field name="name">Tipos de vehículos</field>
+        <field name="res_model">tipos.vehiculos</field>
+        <field name="view_mode">tree,form,kanban</field>
+    </record>
+    <record id="sfg_tipos_vehiculos_tree" model="ir.ui.view">
+        <field name="name">tipos.vehiculos.tree</field>
+        <field name="model">tipos.vehiculos</field>
+        <field name="arch" type="xml">
+            <tree string="Listado Tipos de Vehículos">
+                <field name="name"/>
+                <field name="clasificacion_energetica"/>
+                <field name="enganche_carro"/>
+            </tree>
+        </field>
+    </record>
+    <record id="sfg_tipos_vehiculos_form" model="ir.ui.view">
+        <field name="name">tipos.vehiculos.form</field>
+        <field name="model">tipos.vehiculos</field>
+        <field name="arch" type="xml">
+            <form string="Tipo de Vehículo">
+                <sheet>
+                    <h1>
+                        <field name="name" class="oe_inline"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="clasificacion_energetica"/>
+                            <button name="%(sfg_action_clasificacion_energetica)d"
+                                    type="action"
+                                    string="Elegir Clasificación"
+                                    class="oe_highlight"/>
+                            <field name="enganche_carro"/>
+                        </group>
+                    </group>
+                    <!-- Pestaña para Vehículos relacionados -->
+                    <notebook>
+                        <page string="Vehículos de este tipo">
+                            <field name="vehiculos_ids" mode="tree" readonly="1" options="{'no_open': True}">
+                                <tree string="Vehículos de este tipo" editable="false">
+                                    <field name="name"/>
+                                    <field name="codigo"/>
+                                    <field name="matricula"/>
+                                    <field name="precio_diario"/>
+                                    <field name="numero_alquileres"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="sfg_tipos_vehiculos_kanban" model="ir.ui.view">
+        <field name="name">tipos.vehiculos.kanban</field>
+        <field name="model">tipos.vehiculos</field>
+        <field name="arch" type="xml">
+            <kanban records_draggable="true">
+                <field name="clasificacion_energetica"/>
+                <field name="enganche_carro"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <p><b><field name="name"/></b></p>
+                            <t t-if="record.clasificacion_energetica.raw_value == '0' or record.clasificacion_energetica.raw_value == 'eco'">
+                                <p>Clasificación Energética:
+                                    <t t-esc="record.clasificacion_energetica.value"/>
+                                </p>
+                            </t>
+                            <t t-if="record.enganche_carro.raw_value">
+                                <p>Enganche para Carro: Sí</p>
+                            </t>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Acción para generar un nuevo Tipo de Vehículo -->
+    <record id="sfg_action_generar_tipo_vehiculo" model="ir.actions.server">
+        <field name="name">Generar Tipo de Vehículo</field>
+        <field name="model_id" ref="model_tipos_vehiculos"/>
+        <field name="state">code</field>
+        <field name="code">env['tipos.vehiculos'].action_generar_tipo_vehiculo()</field>
+    </record>
+
+   <!-- Menú para generar un Tipo de Vehículo -->
+    <menuitem id="menu_generar_tipo_vehiculo" name="Generar Tipo de Vehículo"
+              parent="menu_opciones"
+              action="sfg_action_generar_tipo_vehiculo"/>
+</odoo>

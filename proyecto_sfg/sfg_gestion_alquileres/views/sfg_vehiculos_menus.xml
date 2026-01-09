@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <menuitem id="menu_alquiler_vehiculos_root" name="Alquiler de Vehículos">
+        <menuitem id="menu_vehiculos_alquiler" name="Vehículos/Alquiler">
+            <menuitem id="menu_vehiculos" name="Vehículos" action="sfg_vehiculos_action"/>
+            <menuitem id="menu_alquiler_vehiculos" name="Alquiler de vehículos" action="sfg_alquiler_vehiculos_action"/>
+        </menuitem>
+        <menuitem id="menu_opciones" name="Opciones">
+            <menuitem id="menu_tipos_vehiculos" name="Tipos de vehículos" action="sfg_tipos_vehiculos_action"/>
+            <menuitem id="menu_caracteristicas_vehiculos" name="Características especiales" action="sfg_caracteristicas_vehiculos_action"/>
+        </menuitem>
+    </menuitem>
+</odoo>

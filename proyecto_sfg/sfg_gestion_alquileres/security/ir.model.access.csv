@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vehiculos,sfg.vehiculos,model_vehiculos,base.group_user,1,1,1,1
+access_tipos_vehiculos,sfg.tipos.vehiculos,model_tipos_vehiculos,base.group_user,1,1,1,1
+access_caracteristicas_vehiculos,sfg.caracteristicas.vehiculos,model_caracteristicas_vehiculos,base.group_user,1,1,1,1
+access_alquileres_vehiculos,sfg.alquileres.vehiculos,model_alquileres_vehiculos,base.group_user,1,1,1,1
+access_generar_matricula_wizard,sfg.generar.matricula.wizard,model_generar_matricula_wizard,base.group_user,1,1,1,1
+access_clasificacion_energetica_wizard,sfg.clasificacion.energetica.wizard,model_clasificacion_energetica_wizard,base.group_user,1,1,1,1

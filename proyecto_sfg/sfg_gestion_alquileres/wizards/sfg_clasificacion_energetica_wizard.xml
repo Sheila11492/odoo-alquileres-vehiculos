@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Vista del asistente -->
+    <record id="sfg_view_clasificacion_energetica_wizard" model="ir.ui.view">
+        <field name="name">clasificacion.energetica.wizard.form</field>
+        <field name="model">clasificacion.energetica.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Elegir Clasificación Energética">
+                <group>
+                    <field name="combustible"/>
+                </group>
+                <footer>
+                    <button name="action_establecer_clasificacion" type="object" string="Aceptar" class="oe_highlight"/>
+                    <button string="Cancelar" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Acción del asistente -->
+    <record id="sfg_action_clasificacion_energetica" model="ir.actions.act_window">
+        <field name="name">Elegir Clasificación Energética</field>
+        <field name="res_model">clasificacion.energetica.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
+

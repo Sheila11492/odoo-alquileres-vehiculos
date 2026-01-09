@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Plantilla principal del informe de alquileres por usuario -->
+    <template id="sfg_template_res_users">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="user">
+                    <div class="page">
+                        <main>
+                            <h1 style="text-align:center;">
+                                <t t-esc="user.name"/>
+                            </h1>
+
+                            <t t-if="user.alquileres_ids">
+                                <t t-call="sfg_gestion_alquileres.sfg_template_alquileres_vehiculo">
+                                    <t t-set="alquileres" t-value="user.alquileres_ids"/>
+                                </t>
+                            </t>
+                            <t t-else="">
+                                <p style="text-align:center;">
+                                    Este usuario no tiene alquileres registrados.
+                                </p>
+                            </t>
+                        </main>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

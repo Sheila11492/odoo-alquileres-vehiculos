@@ -1,0 +1,25 @@
+{
+    'name': 'Alquiler de Vehículos',
+    'summary': 'Módulo de Gestión de vehículos, tipos y alquileres.',
+    'description': "Permite registrar vehículos, tipos y gestionar alquileres.",
+    'license': 'LGPL-3',
+    'depends': [
+        'base',
+    ],
+    'data': [
+        'wizards/sfg_generar_matricula_wizard.xml',
+        'wizards/sfg_clasificacion_energetica_wizard.xml',
+        'views/sfg_alquileres_vehiculos_views.xml',
+        'views/sfg_res_partner_views.xml',
+        'views/sfg_vehiculos_views.xml',
+        'views/sfg_tipos_vehiculos_views.xml',
+        'views/sfg_caracteristicas_vehiculos_views.xml',
+        'views/sfg_vehiculos_menus.xml',
+        'reports/sfg_vehiculos_templates.xml',
+        'reports/sfg_vehiculos_reports.xml',
+        'reports/sfg_res_users_templates.xml',
+        'reports/sfg_res_users_reports.xml',
+        'security/ir.model.access.csv',
+    ],
+    'application': True,
+}

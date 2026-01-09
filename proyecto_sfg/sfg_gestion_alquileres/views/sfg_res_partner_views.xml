@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Herencia de la vista de formulario de res.partner -->
+    <record id="sfg_view_partner_form_inherit_alquileres" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.alquileres.vehiculos</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <!-- Nueva pestaña para Alquileres de vehículos -->
+                <page string="Alquileres de vehículos" name="alquileres_vehiculos">
+                    <field name="alquileres_ids">
+                        <tree>
+                            <field name="vehiculo_id"/>
+                            <field name="fecha_inicio"/>
+                            <field name="fecha_fin"/>
+                            <field name="state"/>
+                            <field name="precio_final"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
+
+

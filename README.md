@@ -63,6 +63,6 @@ El módulo aplica de forma práctica conceptos clave de **desarrollo empresarial
 ## 👤 Autora
 
 **Sheila**  
-Desarrolladora junior – DAM
+Proyecto académico realizado durante mis estudios en DAM.
 
 ---
